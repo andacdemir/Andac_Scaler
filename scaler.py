@@ -1,12 +1,13 @@
-import numpy as np
-
 # Scales the given input array of 2d to the desired mean and std along the axis
 # specified.
-# axis can be 0 or 1
-# If axis=0, transform each feature (columnwise in the dataset)
-# If axis=1, transform each sample (rowwise in the dataset)
+# axis can be 0 or 1 
+# which cannot be handled by sklearn.preprocessing.StandardScaler 
+# If axis=0, transform each feature (column-wise in the dataset)
+# If axis=1, transform each sample (row-wise in the dataset)
 
-class scaler(): 
+import numpy as np
+
+class StandardScaler(): 
     def __init__(self, input_array, mean, std, axis):
         # to convert the integer array to a floating array add 0.0
         self.inp = input_array + 0.0
@@ -16,7 +17,7 @@ class scaler():
         self.mean2 = mean
         self.std2 = std
     
-    def StandardScaler(self):
+    def scale(self):
         if self.ax == 0: 
             for i, column in enumerate(self.inp.T):
                 column = (column - self.mean1[i]) * self.std2 / self.std1[i] \
@@ -34,7 +35,7 @@ class scaler():
     # You call the InverseScaler after calling the StandardScaler function
     # to scale the output of the StandardScaler function back to its 
     # original statistical properties 
-    def InverseScaler(self):
+    def inverse_scale(self):
         if self.ax == 0: 
             for i, column in enumerate(self.inp.T):
                 column = (column - self.mean2) * self.std1[i] / self.std2 \
@@ -57,21 +58,21 @@ def main():
     x = np.array([[5,7,3],[3,2,2],[1,8,1],[4,0,9]])
     mean = 0
     std = 1
-    Andac_scaler = scaler(x, mean, std, axis=0)   
-    print(Andac_scaler.StandardScaler())
-    print(Andac_scaler.InverseScaler())
+    Andac_scaler = StandardScaler(x, mean, std, axis=0)   
+    print(Andac_scaler.scale())
+    print(Andac_scaler.inverse_scale())
     # Test 2
     # Test with both dimensions:
-    Andac_scaler_0 = scaler(x, mean, std, axis=0) 
-    scaled0 = Andac_scaler_0.StandardScaler() 
-    Andac_scaler_1 = scaler(scaled0, mean, std, axis=1) 
-    scaled1 = Andac_scaler_1.StandardScaler() 
+    Andac_scaler_0 = StandardScaler(x, mean, std, axis=0) 
+    scaled0 = Andac_scaler_0.scale() 
+    Andac_scaler_1 = StandardScaler(scaled0, mean, std, axis=1) 
+    scaled1 = Andac_scaler_1.inverse_scale() 
     print(scaled0)
     print(scaled1)
     # Test 3:
     # Inverse transformations:
-    scaled1_inversed = Andac_scaler_1.InverseScaler()
-    scaled0_inversed = Andac_scaler_0.InverseScaler()
+    scaled1_inversed = Andac_scaler_1.scale()
+    scaled0_inversed = Andac_scaler_0.inverse_scale()
     print(scaled1_inversed)
     print(scaled0_inversed)
 
