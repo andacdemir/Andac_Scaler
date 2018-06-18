@@ -1,6 +1,6 @@
 # Andac_Scaler 
 
-Scales the given input array of 2d to the desired mean and std along the axis specified.
+Scales the given 2d input array to the desired mean and std. along the axis specified.
 
 Axis can be 0 or 1 which cannot be handled by sklearn.preprocessing.StandardScaler 
 
