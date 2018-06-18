@@ -1,4 +1,4 @@
-## Andac_Scaler 
+# Andac_Scaler 
 
 # Scales the given input array of 2d to the desired mean and std along the axis
 # specified.
